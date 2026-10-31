@@ -1,0 +1,28 @@
+name: Cinema Seat Monitor
+
+on:
+  schedule:
+    # 5分おきに自動起動（GitHubの混雑状況により数分ずれることがあります）
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # 手動実行ボタンも有効化
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリの読み込み
+        uses: actions/checkout@v3
+
+      - name: Python環境構築
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: ライブラリインストール
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: 監視スクリプト実行
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python cinema.py
