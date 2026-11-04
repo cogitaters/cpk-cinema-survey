@@ -2,9 +2,8 @@ name: Cinema Seat Monitor
 
 on:
   schedule:
-    # 5分おきに自動起動（GitHubの混雑状況により数分ずれることがあります）
     - cron: '*/5 * * * *'
-  workflow_dispatch: # 手動実行ボタンも有効化
+  workflow_dispatch:
 
 jobs:
   check:
